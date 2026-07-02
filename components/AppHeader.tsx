@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { DEV_AUTH_BYPASS } from "@/lib/devAuth";
 import { SignOutButton } from "./SignOutButton";
@@ -26,7 +27,11 @@ export function AppHeader() {
               >
                 Účet
               </Link>
-              <SignOutButton />
+              {/* Stack's useUser() bails out to CSR during SSR and needs a
+                  Suspense boundary above it. */}
+              <Suspense fallback={null}>
+                <SignOutButton />
+              </Suspense>
             </>
           )}
         </div>
